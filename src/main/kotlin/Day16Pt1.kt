@@ -1,6 +1,6 @@
 import java.nio.file.Files
 import java.nio.file.Paths
-import java.util.PriorityQueue
+import java.util.*
 
 typealias ReindeerMap = List<MutableList<Tile?>>
 

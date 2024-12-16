@@ -5,8 +5,6 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.math.abs
 import kotlin.math.floor
-import kotlin.math.max
-import kotlin.math.min
 import kotlin.math.round
 
 fun main() {

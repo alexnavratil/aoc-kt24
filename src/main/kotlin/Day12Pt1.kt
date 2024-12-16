@@ -1,8 +1,5 @@
 import java.nio.file.Files
 import java.nio.file.Paths
-import kotlin.math.floor
-import kotlin.math.log10
-import kotlin.math.pow
 
 typealias Region = Set<GardenPlot>
 

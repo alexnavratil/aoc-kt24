@@ -1,6 +1,5 @@
 import java.nio.file.Files
 import java.nio.file.Paths
-import kotlin.math.floor
 
 fun main() {
     val inputPath = ClassPathMarker::class.java.getResource("files/day6/input.txt").toURI()
