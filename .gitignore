@@ -44,4 +44,4 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-src/main/resources/files/*.txt
+src/main/resources/files/*/*.txt
