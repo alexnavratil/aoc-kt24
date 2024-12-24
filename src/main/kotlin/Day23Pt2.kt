@@ -16,33 +16,34 @@ fun main() {
             (graph.getOrDefault(it.second, mutableListOf()) + mutableListOf<String>(it.first)).toMutableList()
     }
 
-    val potentialCombinations: MutableSet<Set<String>> = mutableSetOf()
+    val maxChunkSize = graph.maxBy { it.value.size }.value.size + 1
+    (MinChunkSize..maxChunkSize).reversed().forEach { chunkSize ->
+        graph
+            .forEach { (firstNode, firstNodes) ->
+                val baseNodes = firstNodes + listOf(firstNode)
 
-    graph
-        .forEach { (firstNode, firstNodes) ->
-            val baseNodes = firstNodes + listOf(firstNode)
-
-            if (baseNodes.size >= MinChunkSize) {
-                (MinChunkSize until baseNodes.size).forEach { chunkSize ->
+                if (baseNodes.size >= chunkSize) {
                     val chunkedBaseNodes = baseNodes.combinations(chunkSize)
 
-                    potentialCombinations.addAll(chunkedBaseNodes)
                     chunkedBaseNodes.forEach { chunk ->
+                        val intersectedNodes = chunk.map { node -> (graph[node]!! + setOf(node)).toSet() }
+                        var totalIntersection = intersectedNodes.first()
 
+                        val success = intersectedNodes.drop(1).all { nodes ->
+                            totalIntersection = totalIntersection.intersect(nodes)
+
+                            return@all totalIntersection == chunk
+                        }
+
+                        if (success) {
+                            println(chunk.sorted().joinToString(","))
+                            return
+                        }
                     }
                 }
+
             }
-
-        }
-
-    val largestChunk = potentialCombinations.sortedByDescending { it.size }.first { chunk ->
-        val intersectedNodes = chunk.map { node -> (graph[node]!! + setOf(node)).toSet() }
-        val totalIntersection = intersectedNodes.reduce { acc, node -> acc.intersect(node) }
-
-        return@first totalIntersection.isNotEmpty() && chunk.toSet() == totalIntersection
     }
-
-    println(largestChunk.sorted().joinToString(","))
 }
 
 fun <T> List<T>.combinations(combinationSize: Int): Set<Set<T>> {
